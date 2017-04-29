@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 class Form extends Component {
     static childContextTypes = {
         form: PropTypes.object
-    }
+    };
 
     componentWillMount() {
         this.inputs = [];
@@ -68,9 +68,5 @@ class Form extends Component {
         this.inputs.forEach(input => input.resetValue());
     }
 }
-
-Form.childContextTypes = {
-    form: PropTypes.object
-};
 
 export default Form;
