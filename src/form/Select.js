@@ -4,6 +4,7 @@ import HOC from './HOC';
 function Select({ name, value = '', options, setValue }) {
     return (
         <select
+            className='form-control'
             name={name}
             value={value}
             onChange={e => setValue(e.target.value)}>

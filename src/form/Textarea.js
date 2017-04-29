@@ -4,6 +4,7 @@ import HOC from './HOC';
 function Textarea({ name, value = '', placeholder, setValue }) {
     return (
         <textarea
+            className='form-control'
             name={name}
             placeholder={placeholder}
             value={value}

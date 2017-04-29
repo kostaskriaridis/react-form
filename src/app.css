@@ -1,0 +1,15 @@
+.container {
+    margin-bottom: 30px;
+}
+
+.nav {
+    margin-bottom: 10px;
+}
+
+.form-group__remove {
+    margin-right: 5px;
+}
+
+.btn + .btn {
+    margin-left: 10px;
+}

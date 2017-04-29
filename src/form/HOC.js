@@ -30,9 +30,9 @@ export default function HOC(InputComponent) {
 
         render() {
             const componentProps = {
+                ...this.props,
                 setValue: this.setValue,
-                value: this.state.value,
-                ...this.props
+                value: this.state.value
             };
 
             return <InputComponent {...componentProps} />;
@@ -43,7 +43,7 @@ export default function HOC(InputComponent) {
         }
 
         resetValue() {
-            this.setValue(undefined);
+            this.setValue(this.props.value);
         }
 
         getValue() {

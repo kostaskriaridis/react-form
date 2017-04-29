@@ -4,6 +4,7 @@ import HOC from './HOC';
 function Input({ type, name, placeholder, value = '', setValue }) {
     return (
         <input
+            className='form-control'
             type={type || 'text'}
             name={name}
             placeholder={placeholder}
