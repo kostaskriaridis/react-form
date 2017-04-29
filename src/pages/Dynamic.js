@@ -9,23 +9,23 @@ import Textarea from '../form/Textarea';
 export default class Dynamic extends Component {
     state = {
         fields: [
-            { type: 'input', name: 'person.first_name', label: 'Имя' },
-            { type: 'input', name: 'person.age', label: 'Возраст' },
+            { type: 'input', name: 'person.first_name', label: 'Имя', placeholder: 'Введите имя' },
+            { type: 'input', name: 'person.age', label: 'Возраст', placeholder: 'Введите возраст' },
             {
                 type: 'select',
                 name: 'address.city',
                 label: 'Город',
-                value: 'moscow',
+                placeholder: 'Выберите город',
                 options: [
                     { label: 'Москва', value: 'moscow' },
                     { label: 'Санкт-Петербург', value: 'saint-petersburg' },
                     { label: 'Екатеринбург', value: 'ekaterinburg' }
                 ]
             },
-            { type: 'input', name: 'address.street', label: 'Улица' },
-            { type: 'input', name: 'address.house', label: 'Дом' },
+            { type: 'input', name: 'address.street', label: 'Улица', placeholder: 'Введите улицу' },
+            { type: 'input', name: 'address.house', label: 'Дом', placeholder: 'Введите дом' },
             { type: 'checkbox', name: 'address.isActive', label: 'Активен?' },
-            { type: 'textarea', name: 'comment', label: 'Комментарий' },
+            { type: 'textarea', name: 'comment', label: 'Комментарий', placeholder: 'Введите комментарий' }
         ]
     };
 
@@ -97,6 +97,7 @@ function CreateForm({ onCreateField }) {
     let form;
 
     function handleCreateField(data) {
+        // Проверяем, что все поля заполнены
         if (!Object.keys(data).every(name => data[name])) {
             return;
         }
@@ -127,6 +128,11 @@ function CreateForm({ onCreateField }) {
                 <Input
                     name='label'
                     placeholder='Label' />
+            </div>
+            <div className='form-group'>
+                <Input
+                    name='placeholder'
+                    placeholder='Placeholder' />
             </div>
             <div className='form-group'>
                 <Input

@@ -2,7 +2,15 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 export default function HOC(InputComponent) {
-    class Input extends Component {
+    return class Input extends Component {
+        static defaultProps = {
+            onChange() {}
+        };
+
+        static contextTypes = {
+            form: PropTypes.object
+        };
+
         constructor(props) {
             super(props);
 
@@ -39,6 +47,7 @@ export default function HOC(InputComponent) {
         }
 
         setValue(value) {
+            this.props.onChange(value);
             this.setState({ value });
         }
 
@@ -50,10 +59,4 @@ export default function HOC(InputComponent) {
             return this.state.value;
         }
     }
-
-    Input.contextTypes = {
-        form: PropTypes.object
-    };
-
-    return Input;
 }

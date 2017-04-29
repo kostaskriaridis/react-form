@@ -1,7 +1,11 @@
 import React from 'react';
 import HOC from './HOC';
 
-function Select({ name, value = '', options, setValue }) {
+function Select({ name, value = '', placeholder, options, setValue }) {
+    if (placeholder) {
+        options = [{ value: '', label: placeholder }].concat(options);
+    }
+
     return (
         <select
             className='form-control'
