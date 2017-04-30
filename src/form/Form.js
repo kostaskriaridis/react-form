@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 class Form extends Component {
     static childContextTypes = {
         form: PropTypes.object
-    }
+    };
 
     componentWillMount() {
         this.inputs = [];
@@ -31,7 +31,25 @@ class Form extends Component {
     handleSubmit(e) {
         e.preventDefault();
 
-        this.props.onSubmit(this.getModel());
+        const isFormValid = this.validateForm();
+
+        if (isFormValid) {
+            this.props.onSubmit(this.getModel());
+        }
+    }
+
+    validateForm() {
+        let isFormValid = true;
+
+        this.inputs.forEach(input => {
+            const isInputValid = input.validate();
+
+            if (isFormValid && !isInputValid) {
+                isFormValid = isInputValid;
+            }
+        });
+
+        return isFormValid;
     }
 
     getModel() {
@@ -68,9 +86,5 @@ class Form extends Component {
         this.inputs.forEach(input => input.resetValue());
     }
 }
-
-Form.childContextTypes = {
-    form: PropTypes.object
-};
 
 export default Form;

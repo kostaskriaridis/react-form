@@ -1,25 +1,29 @@
 import React from 'react';
 import HOC from './HOC';
 
-function Select({ name, value = '', placeholder, options, setValue }) {
+function Select({ name, value = '', placeholder, options, errorMessage, disabled, setValue }) {
     if (placeholder) {
         options = [{ value: '', label: placeholder }].concat(options);
     }
 
     return (
-        <select
-            className='form-control'
-            name={name}
-            value={value}
-            onChange={e => setValue(e.target.value)}>
-            {options.map((option, index) =>
-                <option
-                    key={index}
-                    value={option.value}>
-                    {option.label}
-                </option>
-            )}
-        </select>
+        <div>
+            <select
+                className='form-control'
+                name={name}
+                value={value}
+                disabled={disabled}
+                onChange={e => setValue(e.target.value)}>
+                {options.map((option, index) =>
+                    <option
+                        key={index}
+                        value={option.value}>
+                        {option.label}
+                    </option>
+                )}
+            </select>
+            <div className='error'>{errorMessage}</div>
+        </div>
     );
 }
 

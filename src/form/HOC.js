@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import validationRules from '../utils/validations';
 
 export default function HOC(InputComponent) {
     return class Input extends Component {
         static defaultProps = {
-            onChange() {}
+            onChange() {},
+            validationMessages: {}
         };
 
         static contextTypes = {
@@ -18,7 +20,8 @@ export default function HOC(InputComponent) {
             this.getValue = this.getValue.bind(this);
 
             this.state = {
-                value: this.props.value
+                value: this.props.value,
+                errorMessage: null
             };
         }
 
@@ -40,10 +43,35 @@ export default function HOC(InputComponent) {
             const componentProps = {
                 ...this.props,
                 setValue: this.setValue,
-                value: this.state.value
+                value: this.state.value,
+                errorMessage: this.state.errorMessage
             };
 
             return <InputComponent {...componentProps} />;
+        }
+
+        validate() {
+            const { validations, validationMessages } = this.props;
+            let errorMessage = null;
+
+            for (const key in validations) {
+                if (validations.hasOwnProperty(key)) {
+                    const isValid = validationRules[key](this.state.value, validations[key]);
+
+                    if (!isValid) {
+                        errorMessage = validationMessages[key];
+                    }
+                }
+            }
+
+            if (errorMessage) {
+                this.setState({ errorMessage });
+                return false;
+            } else if (this.state.errorMessage) {
+                this.setState({ errorMessage: null });
+            }
+
+            return true;
         }
 
         setValue(value) {
