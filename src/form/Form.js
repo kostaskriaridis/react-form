@@ -56,7 +56,8 @@ class Form extends Component {
         return this.inputs.reduce((model, input) => {
             const value = input.getValue();
             const name = input.props.name;
-            const keys = name.split('.');
+            // Конвертим квадратные скобки в точки
+            const keys = name.replace(/\[(\w+)\]/g, '.$1').split('.');
 
             let base = model;
 
@@ -64,7 +65,8 @@ class Form extends Component {
                 const key = keys.shift();
 
                 if (keys.length) {
-                    base = base[key] = base[key] || {};
+                    // Если следующий ключ - число, значит мы должны изпользовать массив
+                    base = base[key] = base[key] || (isNaN(keys[0]) ? {} : []);
                 } else {
                     base = base[key] = value;
                 }

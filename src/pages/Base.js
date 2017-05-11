@@ -102,6 +102,16 @@ class Base extends Component {
                         ]} />
                 </div>
                 <div className='form-group'>
+                    <label>Предпочтения в еде</label>
+                    <RadioGroup
+                        name='food'
+                        items={[
+                            { value: 'donut', label: 'Пончики' },
+                            { value: 'pizza', label: 'Пицца' },
+                            { value: 'past', label: 'Паста' }
+                        ]} />
+                </div>
+                <div className='form-group'>
                     <label>Адрес</label>
                     <Input
                         name='contact.address'
@@ -117,6 +127,14 @@ class Base extends Component {
                         Совпадает с фактическим
                     </label>
                 </div>
+                {[1, 2, 3].map((item, index) =>
+                    <div className='form-group' key={index}>
+                        <label>Умение {index + 1}</label>
+                        <Input
+                            name={`skills[${index}]`}
+                            placeholder={`Введите скилл ${index + 1}`} />
+                    </div>
+                )}
                 <div className='form-group'>
                     <label>Комментарий</label>
                     <Textarea
