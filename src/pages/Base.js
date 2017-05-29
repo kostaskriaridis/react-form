@@ -37,6 +37,17 @@ class Base extends Component {
                         placeholder='Введите возраст' />
                 </div>
                 <div className='form-group'>
+                    <label>Хобби</label>
+                    <Select
+                        name='person.hobby'
+                        options={[
+                            { value: 'ski', label: 'Лыжи' },
+                            { value: 'surf', label: 'Серфинг' },
+                            { value: 'drive', label: 'Вождение' }
+                        ]}
+                        multiple />
+                </div>
+                <div className='form-group'>
                     <label>Телефон</label>
                     <Input
                         name='contact.phone'
