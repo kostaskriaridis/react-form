@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-export default function HOC(InputComponent) {
-    return class Input extends Component {
+export default function HOC(FieldComponent) {
+    return class Field extends Component {
         static defaultProps = {
             onChange() {}
         };
@@ -43,7 +43,7 @@ export default function HOC(InputComponent) {
                 value: this.state.value
             };
 
-            return <InputComponent {...componentProps} />;
+            return <FieldComponent {...componentProps} />;
         }
 
         setValue(value) {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import HOC from './HOC';
+import { HOC } from '../module';
 
 class Select extends Component {
     componentWillMount() {

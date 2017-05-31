@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
-import Form from '../form/Form';
+import Form from '../module';
+
 import Input from '../form/Input';
 import Select from '../form/Select';
 import Checkbox from '../form/Checkbox';

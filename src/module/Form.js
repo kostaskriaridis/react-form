@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-class Form extends Component {
+export default class Form extends Component {
     static childContextTypes = {
         form: PropTypes.object
     };
@@ -70,5 +70,3 @@ class Form extends Component {
         this.inputs.forEach(input => input.resetValue());
     }
 }
-
-export default Form;

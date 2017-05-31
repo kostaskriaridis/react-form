@@ -1,5 +1,5 @@
 import React from 'react';
-import HOC from './HOC';
+import { HOC } from '../module';
 
 function RadioGroup({ name, items, value, setValue }) {
     return (
