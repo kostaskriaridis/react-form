@@ -137,4 +137,15 @@ addValidationRule('equalsField', (values, value, fieldName) => {
     ]} />
 ```
 
-Thats it
+#### External errors
+If your validation fails on server, you can pass an `errors` prop to `<Form />` element which should contain the scheme like this:
+
+```javascript
+{
+    user: {
+        name: 'This name is used by other user'
+    }
+}
+```
+
+Then `<Input />` component with name `user.name` will receive an `errorMessage` prop with this message

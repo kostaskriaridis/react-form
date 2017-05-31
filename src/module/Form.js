@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { flatten } from './utils';
 
 export default class Form extends Component {
     static childContextTypes = {
@@ -22,6 +23,14 @@ export default class Form extends Component {
                 detachField: this.detachField
             }
         };
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const { errors } = nextProps;
+
+        if (errors !== this.props.errors) {
+            this.receiveExternalErrors(errors);
+        }
     }
 
     render() {
@@ -131,5 +140,17 @@ export default class Form extends Component {
 
     resetForm() {
         this.inputs.forEach(input => input.resetValue());
+    }
+
+    receiveExternalErrors(errors) {
+        const flattenErrors = flatten(errors);
+
+        this.inputs.forEach(input => {
+            const externalError = flattenErrors[input.props.name];
+
+            if (externalError) {
+                input.setExternalError(externalError);
+            }
+        });
     }
 }

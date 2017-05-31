@@ -21,7 +21,8 @@ export default function HOC(FieldComponent) {
 
             this.state = {
                 value: this.props.value,
-                errorMessage: null
+                errorMessage: null,
+                externalError: null
             };
         }
 
@@ -44,7 +45,7 @@ export default function HOC(FieldComponent) {
                 ...this.props,
                 setValue: this.setValue,
                 value: this.state.value,
-                errorMessage: this.state.errorMessage
+                errorMessage: this.getErrorMessage()
             };
 
             return <FieldComponent {...componentProps} />;
@@ -72,7 +73,10 @@ export default function HOC(FieldComponent) {
                 }
             });
 
-            this.setState({ errorMessage });
+            this.setState({
+                errorMessage,
+                externalError: null
+            });
 
             return !errorMessage;
         }
@@ -82,12 +86,22 @@ export default function HOC(FieldComponent) {
             this.setState({ value });
         }
 
-        resetValue() {
-            this.setValue(this.props.value);
+        setExternalError(externalError) {
+            this.setState({ externalError });
         }
 
         getValue() {
             return this.state.value;
+        }
+
+        getErrorMessage() {
+            const { errorMessage, externalError } = this.state;
+
+            return errorMessage || externalError;
+        }
+
+        resetValue() {
+            this.setValue(this.props.value);
         }
     }
 }

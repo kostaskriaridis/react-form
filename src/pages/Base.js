@@ -9,7 +9,12 @@ import Textarea from '../form/Textarea';
 import RadioGroup from '../form/RadioGroup';
 
 class Base extends Component {
+    state = {
+        errors: {}
+    };
+
     componentWillMount() {
+        this.handleSubmit = this.handleSubmit.bind(this);
         this.handleReset = this.handleReset.bind(this);
     }
 
@@ -17,6 +22,7 @@ class Base extends Component {
         return (
             <Form
                 ref={form => this.form = form}
+                errors={this.state.errors}
                 onSubmit={this.handleSubmit}>
                 <div className='form-group'>
                     <label>Имя</label>
@@ -63,7 +69,13 @@ class Base extends Component {
                     <label>Телефон</label>
                     <Input
                         name='contact.phone'
-                        placeholder='Введите телефон' />
+                        placeholder='Введите телефон'
+                        rules={[
+                            {
+                                name: 'isNotEmpty',
+                                message: 'Введите номер телефона'
+                            }
+                        ]} />
                 </div>
                 <div className='form-group'>
                     <label>Город</label>
@@ -125,8 +137,22 @@ class Base extends Component {
         );
     }
 
+
     handleSubmit(data) {
-        console.log(data);
+        if (Math.random() > 0.5) {
+            this.setState({
+                errors: {
+                    person: {
+                        name: 'Это имя уже используется'
+                    },
+                    contact: {
+                        phone: 'Этот телефон уже используется другим пользователем'
+                    }
+                }
+            });
+        } else {
+            console.log(data);
+        }
     }
 
     handleReset() {
