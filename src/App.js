@@ -11,6 +11,7 @@ import Header from './header/Header';
 import AppContainer from './pages/AppContainer';
 import Base from './pages/Base';
 import Dynamic from './pages/Dynamic';
+import Password from './pages/Password';
 
 function App({ location }) {
     return (
@@ -19,6 +20,7 @@ function App({ location }) {
                 <Header />
                 <Route exact path='/' component={Base} />
                 <Route path='/dynamic' component={Dynamic} />
+                <Route path='/password' component={Password} />
             </AppContainer>
         </Router>
     );

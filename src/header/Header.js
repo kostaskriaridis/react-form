@@ -7,6 +7,9 @@ const nav = [{
 }, {
     to: '/dynamic',
     text: 'Динамическая форма'
+}, {
+    to: '/password',
+    text: 'Пароль'
 }];
 
 function Header({ location }) {

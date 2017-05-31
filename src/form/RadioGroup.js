@@ -1,9 +1,10 @@
 import React from 'react';
-import HOC from './HOC';
+import { HOC } from '../module';
+import ValidationError from './ValidationError';
 
-function RadioGroup({ name, items, value, disabled, setValue }) {
+function RadioGroup({ name, items, value, disabled, errorMessage, setValue }) {
     return (
-        <div>
+        <ValidationError errorMessage={errorMessage}>
             {items.map(item =>
                 <div className='radio' key={item.value}>
                     <label>
@@ -17,7 +18,7 @@ function RadioGroup({ name, items, value, disabled, setValue }) {
                     </label>
                 </div>
             )}
-        </div>
+        </ValidationError>
     );
 }
 

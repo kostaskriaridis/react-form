@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import validationRules from '../utils/validations';
+import validationRules from './validationRules';
 
-export default function HOC(InputComponent) {
-    return class Input extends Component {
+export default function HOC(FieldComponent) {
+    return class Field extends Component {
         static defaultProps = {
             onChange() {},
-            validationMessages: {}
+            rules: []
         };
 
         static contextTypes = {
@@ -47,31 +47,34 @@ export default function HOC(InputComponent) {
                 errorMessage: this.state.errorMessage
             };
 
-            return <InputComponent {...componentProps} />;
+            return <FieldComponent {...componentProps} />;
         }
 
-        validate() {
-            const { validations, validationMessages } = this.props;
+        /**
+         * Валидируем поле по правилам. Если не валидно - показываем сообщение.
+         * @param {Object} values. Все поля формы со значениями
+         * @returns {boolean} Валидно поле или нет
+         */
+        validate(values) {
             let errorMessage = null;
 
-            for (const key in validations) {
-                if (validations.hasOwnProperty(key)) {
-                    const isValid = validationRules[key](this.state.value, validations[key]);
+            this.props.rules.forEach(rule => {
+                const { name, value: ruleValue, message } = rule;
 
-                    if (!isValid) {
-                        errorMessage = validationMessages[key];
-                    }
+                if (typeof validationRules[name] !== 'function') {
+                    throw new Error(`Нет такого правила валидации: ${name}`);
                 }
-            }
 
-            if (errorMessage) {
-                this.setState({ errorMessage });
-                return false;
-            } else if (this.state.errorMessage) {
-                this.setState({ errorMessage: null });
-            }
+                const isValid = validationRules[name](values, this.state.value, ruleValue);
 
-            return true;
+                if (!isValid) {
+                    errorMessage = message;
+                }
+            });
+
+            this.setState({ errorMessage });
+
+            return !errorMessage;
         }
 
         setValue(value) {

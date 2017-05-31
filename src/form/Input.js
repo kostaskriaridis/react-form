@@ -1,9 +1,10 @@
 import React from 'react';
-import HOC from './HOC';
+import { HOC } from '../module';
+import ValidationError from './ValidationError';
 
 function Input({ type, name, placeholder, value = '', disabled, errorMessage, setValue }) {
     return (
-        <div>
+        <ValidationError errorMessage={errorMessage}>
             <input
                 className='form-control'
                 type={type || 'text'}
@@ -12,8 +13,7 @@ function Input({ type, name, placeholder, value = '', disabled, errorMessage, se
                 value={value}
                 disabled={disabled}
                 onChange={e => setValue(e.target.value)} />
-            <div className='error'>{errorMessage}</div>
-        </div>
+        </ValidationError>
     );
 }
 

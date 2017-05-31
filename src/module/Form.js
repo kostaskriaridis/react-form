@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-class Form extends Component {
+export default class Form extends Component {
     static childContextTypes = {
         form: PropTypes.object
     };
@@ -31,18 +31,26 @@ class Form extends Component {
     handleSubmit(e) {
         e.preventDefault();
 
-        const isFormValid = this.validateForm();
+        const isFormValid = this.validateForm(this.getFlatModel());
 
         if (isFormValid) {
             this.props.onSubmit(this.getModel());
         }
     }
 
-    validateForm() {
+    /**
+     * Валидируем форму
+     * @returns {boolean} Валидна форма или нет
+     */
+    validateForm(model) {
         let isFormValid = true;
 
         this.inputs.forEach(input => {
-            const isInputValid = input.validate();
+            /**
+             * Передаем в инпут объект со значениями для перекрестной валидации полей.
+             * Валидность одного поля может зависеть от другого
+             */
+            const isInputValid = input.validate(model);
 
             if (isFormValid && !isInputValid) {
                 isFormValid = isInputValid;
@@ -52,6 +60,35 @@ class Form extends Component {
         return isFormValid;
     }
 
+    /**
+     * Получаем объект плоского типа:
+     * {
+     *     'user.name': 'Smike',
+     *     'user.age': '24'
+     * }
+     * @returns {Object}
+     */
+    getFlatModel() {
+        return this.inputs.reduce((model, input) => {
+            const value = input.getValue();
+            const name = input.props.name;
+
+            model[name] = value;
+
+            return model;
+        }, {});
+    }
+
+    /**
+     * Получаем объект древовидного типа:
+     * {
+     *     user: {
+     *         name: 'Smike',
+     *         age: '24'
+     *     }
+     * }
+     * @returns {Object}
+     */
     getModel() {
         return this.inputs.reduce((model, input) => {
             const value = input.getValue();
@@ -76,10 +113,18 @@ class Form extends Component {
         }, {});
     }
 
+    /**
+     * Удаляем компонент
+     * @param {Object} instanceof ReactComponent
+     */
     detachField(field) {
         this.inputs = this.inputs.filter(input => input !== field);
     }
 
+    /**
+     * Добавляем компонент
+     * @param {Object} instanceof ReactComponent
+     */
     attachField(field) {
         this.inputs.push(field);
     }
@@ -88,5 +133,3 @@ class Form extends Component {
         this.inputs.forEach(input => input.resetValue());
     }
 }
-
-export default Form;
