@@ -5,6 +5,12 @@ Inspired by `formsy-react`
 #### Examples
 The examples contain basic form usage, and form, where fields can by created/removed dynamicaly
 
+To run the examples run the following commands:
+```
+$ npm install
+$ npm start
+```
+
 #### Usage
 
 ```javascript
